@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  background: #E9E8E4;
+}
+
+
+#app {
+  min-height: calc(100dvh);
+  display: flex;
+  gap: 48px;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1710px;
+  margin: 0 auto;
+  padding: 24px 0px;
+  box-sizing: border-box;
+  color: #000;
+  font-family: "Noto Sans", "Noto Sans Georgian", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+
+
+
+
+.text__wrong {
+  color: #C6492E;
+}
+
+
+.keyboard {
+  &__key {
+    height: calc(100vw / 3 * 2 / 16.875);
+    width: auto;
+  }
+  
+  &__key_active {
+    animation: blink 1s infinite alternate ease-in-out;
+  }
+}
+
+
+@keyframes blink {
+  from {
+    fill: rgba($color: #FCC151, $alpha: 1.0);
+  }
+
+  to {
+    fill: rgba($color: #FCC151, $alpha: 0);
+  }
+}
+
+
+.tippy-box[data-theme~='tomato'] {
+  background-color: #C6492E;
+  color: #E9E8E4;
+  font-family: "Noto Sans", "Noto Sans Georgian", sans-serif;
+  font-size: 12px;
+}
+
+.tippy-box[data-theme~='tomato'][data-placement^='top']>.tippy-arrow::before {
+  border-top-color: #C6492E;
+}
+
+.tippy-box[data-theme~='tomato'][data-placement^='bottom']>.tippy-arrow::before {
+  border-bottom-color: #C6492E;
+}
+
+.tippy-box[data-theme~='tomato'][data-placement^='left']>.tippy-arrow::before {
+  border-left-color: #C6492E;
+}
+
+.tippy-box[data-theme~='tomato'][data-placement^='right']>.tippy-arrow::before {
+  border-right-color: #C6492E;
+}
+
+
+
+@media (max-width: 668px) {
+  #app {
+    padding: 12px 0px;
+    gap: 24px;
+  }
+}
+
+
+
+@media (max-width: 444px) {
+  #app {
+    padding: 12px 12px;
+  }
+  .keyboard {
+    &__key {
+      height: calc((100vw - 24px) / 16.875);
+
+    }
+ 
+  }
+}
+
+
+
