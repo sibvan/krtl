@@ -1,0 +1,57 @@
+.typing__text {
+  color: var(--color-black);
+  font-size: 40px;
+  opacity: 0.2;
+  white-space: nowrap;
+}
+
+.main {
+  width: 100%;
+}
+
+.typing {
+  text-align: center;
+  width: 100%;
+}
+
+.typing__phrase {
+  position: relative;
+  width: max-content;
+  display: inline-block;
+}
+
+.typing__input {
+  color: var(--color-black);
+  font-size: 40px;
+  outline: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: left;
+}
+
+.typing__input::after {
+  content: "";
+  height: 1px;
+  width: 100%;
+  background: var(--color-black);
+  display: block;
+  position: absolute;
+  bottom: -24px;
+  left: 0px;
+}
+
+
+
+.typing__translate {
+  color: var(--color-black);
+  font-size: 24px;
+  opacity: 0.5;
+  text-align: center;
+  line-height: 145%;
+  width: calc((100% + 24px) / 3 * 2);
+  margin: 0 auto;
+  margin-top: 64px;
+}
