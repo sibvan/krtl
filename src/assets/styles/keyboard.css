@@ -1,0 +1,214 @@
+.keyboard {
+  display: flex;
+  width: calc(100% + 24px);
+  align-items: center;
+}
+
+.keyboard__left {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.keyboard__center {
+  flex: 4;
+  width: 100%;
+  background: color-mix(in srgb, var(--color-white) 50%, transparent)
+    url("/noise.png") no-repeat center / cover;
+  border-radius: min(calc(100dvw * (48 / 2430)), calc(1710px * (48 / 2430)));
+}
+
+.keyboard__rows {
+  padding: min(calc(100dvw * (24 / 2430)), calc(1710px * (24 / 2430)));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: min(calc(100dvw * (12 / 2430)), calc(1710px * (12 / 2430)));
+}
+
+.keyboard__right {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.button-icon {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-black);
+  background-color: transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-icon__bg {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+.keyboard__key {
+  border: none;
+  background: var(--color-white);
+  border-radius: min(calc(100dvw * (8 / 2430)), calc(1710px * (8 / 2430)));
+  padding: min(calc(100dvw * (16 / 2430)), calc(1710px * (16 / 2430)));
+  box-sizing: border-box;
+  display: flex;
+}
+
+.keyboard__row {
+  display: flex;
+  gap: min(calc(100dvw * (12 / 2430)), calc(1710px * (12 / 2430)));
+  width: 100%;
+  justify-content: space-between;
+}
+
+.keyboard__key_96 {
+  width: calc(96 * 100% / 1572);
+  aspect-ratio: 1 / 1;
+}
+
+.keyboard__key_168 {
+  width: calc(168 * 100% / 1572);
+}
+
+.keyboard__key_192 {
+  width: calc(192 * 100% / 1572);
+}
+
+.keyboard__key_180 {
+  width: calc(180 * 100% / 1572);
+}
+
+.keyboard__key_240 {
+  width: calc(240 * 100% / 1572);
+}
+
+.keyboard__key_144 {
+  width: calc(144 * 100% / 1572);
+}
+
+.keyboard__key_504 {
+  width: calc(504 * 100% / 1572);
+}
+
+.keyboard__key_border-top-left {
+  border-top-left-radius: min(
+    calc(100dvw * (32 / 2430)),
+    calc(1710px * (32 / 2430))
+  );
+}
+
+.keyboard__key_border-top-right {
+  border-top-right-radius: min(
+    calc(100dvw * (32 / 2430)),
+    calc(1710px * (32 / 2430))
+  );
+}
+
+.keyboard__key_border-bottom-left {
+  border-bottom-left-radius: min(
+    calc(100dvw * (32 / 2430)),
+    calc(1710px * (32 / 2430))
+  );
+}
+
+.keyboard__key_border-bottom-right {
+  border-bottom-right-radius: min(
+    calc(100dvw * (32 / 2430)),
+    calc(1710px * (32 / 2430))
+  );
+}
+
+.keyboard__key_text {
+  color: var(--color-black);
+  font-size: min(calc(100dvw * (19 / 2430)), calc(1710px * (19 / 2430)));
+}
+
+.keyboard__key_align-bottom-right {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.keyboard__key_align-bottom-left {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.keyboard__key_letter {
+  color: var(--color-black);
+  font-size: 24px;
+  font-size: min(calc(100dvw * (24 / 2430)), calc(1710px * (24 / 2430)));
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboard__key_opacity-10 {
+  color: color-mix(in srgb, var(--color-black) 10%, transparent);
+}
+
+.keyboard__key_2-spans-align-right {
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.keyboard__key_2-spans-align-left {
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.keyboard__key_icon {
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-arrow {
+  opacity: 0.1;
+  width: min(calc(100dvw * (34.1 / 2430)), calc(1710px * (34.1 / 2430)));
+}
+
+.keyboard_key_2-buttons {
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  justify-content: space-between;
+  gap: min(calc(100dvw * (4 / 2430)), calc(1710px * (4 / 2430)));
+}
+
+.keyboard__key_arrow {
+  background: var(--color-white);
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard__key_arrow-top {
+  border-top-left-radius: min(
+    calc(100dvw * (8 / 2430)),
+    calc(1710px * (8 / 2430))
+  );
+  border-top-right-radius: min(
+    calc(100dvw * (8 / 2430)),
+    calc(1710px * (8 / 2430))
+  );
+}
+
+.keyboard__key_arrow-btm {
+  border-bottom-left-radius: min(
+    calc(100dvw * (8 / 2430)),
+    calc(1710px * (8 / 2430))
+  );
+  border-bottom-right-radius: min(
+    calc(100dvw * (8 / 2430)),
+    calc(1710px * (8 / 2430))
+  );
+}
