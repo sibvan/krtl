@@ -7,8 +7,15 @@ interface KeyboardKey {
   extraClass?: string;
 }
 
+interface Letter {
+  text: string;
+  wrong: boolean
+}
+
 type KeyboardRow = KeyboardKey[];
 
 type Keyboard = KeyboardRow[];
 
-export type { KeyboardKey, KeyboardRow, Keyboard }
+
+
+export type { KeyboardKey, KeyboardRow, Keyboard, Letter }

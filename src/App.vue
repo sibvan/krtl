@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header @change-lang="changeLang()" :btn-text="currentLang.btnText" />
-    <Typing @before-input="test" v-model="inputModel" :phrase="phrase" />
+    <Typing v-model="inputModel" :phrase="phrase" :errors="errors" />
     <Keyboard :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 
-import { ref, nextTick, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { languages } from './keyboards';
 
 import Header from './assets/components/Header.vue';
@@ -17,9 +17,23 @@ import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
 
+
+
 const currentLang = ref(languages.ru);
-const phrase = ref("Something wrong with shower".replaceAll(" ", " "));
+const phrase = ref("Something wrong with shower");
 const inputModel = ref("");
+
+
+const errors = computed(() => {
+  const arr: number[] = [];
+  [...inputModel.value].forEach((letter, index) => {
+    if (letter !== phrase.value[index]) {
+      arr.push(index)
+    }
+  });
+  return arr;
+});
+
 
 
 const changeLang = () => {
@@ -39,16 +53,5 @@ const changeLang = () => {
 
 
 
-
-const test = (e: InputEvent) => {
-
-  if (e.inputType === "deleteContentBackward") {
-    inputModel.value = phrase.value.slice(0, inputModel.value.length - 1);
-  } else {
-    inputModel.value = phrase.value.slice(0, inputModel.value.length + 1);
-  }
-
-  nextTick(() => window.getSelection()?.collapse(e.target as HTMLElement, (e.target as HTMLElement).childNodes.length));
-};
 
 </script>
