@@ -14,4 +14,5 @@ import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
 
+
 </script>
