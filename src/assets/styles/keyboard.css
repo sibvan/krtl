@@ -177,11 +177,11 @@
   );
 }
 
-.rename {
+.keyboard__key_divider {
   position: relative;
 }
 
-.rename::after {
+.keyboard__key_divider::after {
   content: "";
   display: block;
   width: 100%;

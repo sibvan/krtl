@@ -3,6 +3,10 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
+    /* Modern JS support */
+    "target": "es2021",
+    "lib": ["es2021", "dom"],
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
