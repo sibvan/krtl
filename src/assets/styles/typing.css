@@ -1,5 +1,3 @@
-
-
 .typing {
   text-align: center;
   width: 100dvw;
@@ -60,19 +58,17 @@
 }
 
 .typing__tranlation {
-  opacity: .5;
+  opacity: 0.5;
   margin-top: 40px;
 }
 
 .typing__translate {
   color: var(--color-black);
   font-size: 24px;
-  opacity: 1;
   text-align: center;
   line-height: 145%;
   width: calc((100% + 24px) / 3 * 2);
   margin: 0 auto;
-  /* margin-top: 40px; */
 }
 
 .typing__progress {
@@ -81,7 +77,8 @@
   pointer-events: none;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   display: flex;
 }

@@ -1,7 +1,6 @@
 <template>
-
   <div class="keyboard">
-    <div class="keyboard__left" >
+    <div class="keyboard__left">
       <button class="button-icon" v-show="false">
         <img class="button-icon__ic" src="/icons/vol-off.svg" alt="">
       </button>
@@ -10,15 +9,12 @@
       <div class="keyboard__rows">
         <div v-for="(row, index) in props.keyboard" :key="index" class="keyboard__row">
           <button v-for="(button, index) in row" :key="index" :class="getClass(button)">
-
             <template v-if="Array.isArray(button.content)">
               <span v-for="(item, index) in button.content" :key="index">{{ item }}</span>
             </template>
-
             <template v-else-if="typeof button.content === 'string'">
               {{ getContent(button) }}
             </template>
-
           </button>
         </div>
       </div>
@@ -35,13 +31,15 @@
 
 <script setup lang="ts">
 
+
 import type { Keyboard, KeyboardKey } from '../../types';
-import { computed } from 'vue';
+
 
 const props = defineProps<{
   keyboard: Keyboard,
   nextLetter?: string
 }>();
+
 
 const getContent = (button: KeyboardKey) => {
   return typeof button.content === "string" && button.type === "letter"
@@ -73,8 +71,6 @@ const getClass = (button: KeyboardKey) => {
     if (props.nextLetter.toLowerCase() === content.toLowerCase()) {
       arrClass.push("keyboard__key_animation-blink");
     }
-
-
   }
 
   if (button.extraClass) arrClass.push(button.extraClass);

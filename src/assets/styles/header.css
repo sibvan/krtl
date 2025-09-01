@@ -42,9 +42,7 @@
 }
 
 .header__button {
-  background: none;
   padding: 8px 16px 8px 8px;
-  border: none;
   box-shadow: inset 0px 0px 0px 1px var(--color-black);
   border-radius: 100px;
   display: flex;
@@ -53,17 +51,18 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.header__button:hover .heaader__button-icon {
+.header__button:hover .header__button-icon {
   filter: brightness(0) invert(1);
 }
 
-.heaader__button-icon {
+.header__button-icon {
   transition: all 0.2s ease-in-out;
 }
 
 .header__button:hover {
   background: var(--color-black);
 }
+
 .header__button:hover .header__button-text {
   color: var(--color-white);
 }

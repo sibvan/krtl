@@ -7,15 +7,17 @@ interface KeyboardKey {
   extraClass?: string;
 }
 
-interface Letter {
-  text: string;
-  wrong: boolean
+interface Phrase {
+  ru: string;
+  en: string;
 }
 
 type KeyboardRow = KeyboardKey[];
 
 type Keyboard = KeyboardRow[];
 
+interface Bg {
+  bg: { path: string };
+}
 
-
-export type { KeyboardKey, KeyboardRow, Keyboard, Letter }
+export type { KeyboardKey, KeyboardRow, Keyboard, Bg, Phrase };

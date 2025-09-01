@@ -1,41 +1,45 @@
 <template>
   <div class="container">
-    <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
-    <Typing ref="typingRef" :hasError="hasError" :isLoading="isLoading" @nextPhrase="getNewPhrase" :translate="translate"
-      :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
-    <Keyboard v-if="!isLoading && !hasError" :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
+    <Header :speed="speed" :errors-number="errorsNumber" :btn-text="btnText" @change-lang="changeLang()" />
+    <Typing ref="typingRef" :has-error="hasError" :is-loading="isLoading" @get-new-phrase="getNewPhrase"
+      :translate="translate" :is-finished="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
+    <Keyboard v-if="!isLoading && !hasError" :next-letter="nextLetter" :keyboard="keyboard" />
     <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
 
-import { ref, computed, watch, onMounted } from 'vue';
-import { languages } from './keyboards';
-
 import Header from './assets/components/Header.vue';
 import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
+
+import { ref, computed, watch, onMounted } from 'vue';
+
+import { languages } from './keyboards';
+
 import { useBgsStore } from './stores/bgs';
 import { usePhrasesStore } from './stores/phrases';
 
+import type { Phrase } from './types';
 
 const bgsStore = useBgsStore();
 const phrasesStore = usePhrasesStore();
+
+
 
 const currentLang = ref(languages.en);
 const phrase = ref("");
 const translate = ref("");
 const inputModel = ref("");
-const start = ref(0);
+const startTime = ref(0);
 const isTyping = ref(false);
 const isFinished = ref(false);
-const typingRef = ref(null);
-
-
+const typingRef = ref<any>(null);
 const isLoading = ref(true);
 const hasError = ref(false);
+
 
 
 onMounted(async () => {
@@ -53,49 +57,11 @@ onMounted(async () => {
 
 });
 
-const getNewPhrase = () => {
-  const randomPhrase = phrasesStore.getRandomPhrase();
-  phrase.value = randomPhrase[currentLang.value.title];
-  translate.value = currentLang.value.title === "ru" ? randomPhrase.en : randomPhrase.ru;
-  inputModel.value = "";
-  isFinished.value = false;
-  typingRef.value?.resetShift();
 
-}
-
-
-
-watch(inputModel, (newVal) => {
-
-  if (newVal.length !== 0 && !isTyping.value) {
-    isTyping.value = true;
-    start.value = new Date().getTime();
-  }
-
-
-  if (newVal.length === phrase.value.length) {
-    isTyping.value = false;
-    isFinished.value = true;
-  }
-});
-
-
-const speed = computed(() => {
-  const typedChars = inputModel.value.length;
-  const phraseLength = phrase.value.length;
-
-  if (typedChars === 0) return 0;
-
-  // коэффициент сглаживания: от 0 до 1 пропорционально прогрессу в фразе
-  const smoothing = Math.min(typedChars / phraseLength, 1);
-
-  const elapsed = new Date().getTime() - start.value; // мс
-  if (elapsed <= 0) return 0;
-
-  const rawSpeed = (typedChars / elapsed) * 60000;
-
-  return Math.round(rawSpeed * smoothing);
-});
+const errorsNumber = computed(() => errors.value.length);
+const btnText = computed(() => currentLang.value.btnText);
+const keyboard = computed(() => currentLang.value.keyboard);
+const nextLetter = computed(() => phrase.value[inputModel.value.length]);
 
 const errors = computed(() => {
   const arr: number[] = [];
@@ -107,13 +73,33 @@ const errors = computed(() => {
   return arr;
 });
 
-const nextLetter = computed(() => {
-  return phrase.value[inputModel.value.length];
+const speed = computed(() => {
+  const typedChars = inputModel.value.length;
+  const phraseLength = phrase.value.length;
+
+  if (typedChars === 0) return 0;
+
+  const smoothing = Math.min(typedChars / phraseLength, 1);
+  const elapsed = new Date().getTime() - startTime.value;
+
+  if (elapsed <= 0) return 0;
+
+  const rawSpeed = (typedChars / elapsed) * 60000;
+  return Math.round(rawSpeed * smoothing);
 });
 
 
-const changeLang = () => {
+const getNewPhrase = () => {
+  const randomPhrase: Phrase = phrasesStore.getRandomPhrase();
+  phrase.value = randomPhrase[currentLang.value.title as keyof Phrase];
+  translate.value = currentLang.value.title === "ru" ? randomPhrase.en : randomPhrase.ru;
+  inputModel.value = "";
+  isFinished.value = false;
+  typingRef.value?.resetShift();
+}
 
+const changeLang = () => {
+  
   const langList = Object.keys(languages) as (keyof typeof languages)[];
   const langId = langList.findIndex(item => item === currentLang.value.title);
 
@@ -127,6 +113,22 @@ const changeLang = () => {
   getNewPhrase();
 }
 
+
+
+
+watch(inputModel, (newVal) => {
+
+  if (newVal.length !== 0 && !isTyping.value) {
+    isTyping.value = true;
+    startTime.value = new Date().getTime();
+  }
+
+
+  if (newVal.length === phrase.value.length) {
+    isTyping.value = false;
+    isFinished.value = true;
+  }
+});
 
 
 

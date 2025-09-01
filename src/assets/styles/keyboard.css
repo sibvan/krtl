@@ -4,7 +4,8 @@
   align-items: center;
 }
 
-.keyboard__left {
+.keyboard__left,
+.keyboard__right {
   display: flex;
   justify-content: center;
   flex: 1;
@@ -27,17 +28,10 @@
   gap: min(calc(100dvw * (12 / 2430)), calc(1710px * (12 / 2430)));
 }
 
-.keyboard__right {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-}
-
 .button-icon {
   width: 40px;
   height: 40px;
   border: 1px solid var(--color-black);
-  background-color: transparent;
   border-radius: 100px;
   cursor: pointer;
   display: flex;
@@ -66,7 +60,6 @@
 }
 
 .keyboard__key {
-  border: none;
   background: var(--color-white);
   border-radius: min(calc(100dvw * (8 / 2430)), calc(1710px * (8 / 2430)));
   padding: min(calc(100dvw * (16 / 2430)), calc(1710px * (16 / 2430)));
@@ -168,10 +161,6 @@
   color: color-mix(in srgb, var(--color-black) 20%, transparent);
 }
 
-.icon-arrow {
-  opacity: 0.1;
-  width: min(calc(100dvw * (34.1 / 2430)), calc(1710px * (34.1 / 2430)));
-}
 
 .keyboard__row:first-child .keyboard__key:first-child {
   border-top-left-radius: min(
@@ -222,13 +211,12 @@
   .keyboard__center {
     display: none;
   }
-  .keyboard__left, .keyboard__right {
+  .keyboard__left,
+  .keyboard__right {
     flex: unset;
   }
   .keyboard {
     gap: 24px;
     justify-content: center;
   }
-
-
 }

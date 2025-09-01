@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { getData } from "../utils/fetcher";
+import { getRandomId } from "../utils/random";
 
 export const usePhrasesStore = defineStore("phrases", () => {
   const phraseList = ref([]);
@@ -10,9 +11,9 @@ export const usePhrasesStore = defineStore("phrases", () => {
   }
 
   const getRandomPhrase = () => {
-    const arrLength = phraseList.value.length;
-    const randomId = Math.floor(Math.random() * arrLength);
-    const randomPhrase = phraseList.value[randomId];
+
+    const id = getRandomId(phraseList.value);
+    const randomPhrase = phraseList.value[id];
     return randomPhrase;
   };
 

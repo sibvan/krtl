@@ -1,13 +1,14 @@
 <template>
   <main class="main">
+
     <div class="typing">
       <div v-if="!isLoading && !hasError" class="typing__text" :style="{ 'left': shift + 'px' }">
 
-        <input autocomplete="off" :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase"
-          :maxlength="props.phrase?.length" :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__input"
+        <input autocomplete="off" :disabled="isFinished" spellcheck="false" ref="input" v-if="props.phrase"
+          :maxlength="props.phrase?.length" :style="{ width: `${props.phrase?.length}ch` }" class="typing__input"
           type="text" name="" id="" :value="model" @input="updateModel">
 
-        <input v-if="props.phrase" :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__phrase"
+        <input v-if="props.phrase" :style="{ width: `${props.phrase?.length}ch` }" class="typing__phrase"
           type="text" name="" id="" :value="props.phrase">
 
         <div class="typing__progress">
@@ -20,9 +21,9 @@
 
         <p class="typing__button" v-if="isLoading">Данные загружаются</p>
         <p class="typing__tranlation" v-if="hasError">Произошла ошибка</p>
-        <p @click="emit('nextPhrase')" class="typing__button" v-if="disabled">Следующая фраза</p>
+        <p @click="emit('getNewPhrase')" class="typing__button" v-if="isFinished">Следующая фраза</p>
 
-        <p class="typing__tranlation" v-if="!disabled && !isLoading && !hasError">{{ translate }}</p>
+        <p class="typing__tranlation" v-if="!isFinished && !isLoading && !hasError">{{ translate }}</p>
 
       </div>
     </div>
@@ -31,25 +32,52 @@
 
 <script setup lang="ts">
 
-
+// import
 
 import { useTemplateRef, computed, watch, nextTick, defineExpose, ref } from 'vue';
 import { useElementSize, useWindowSize } from '@vueuse/core';
 
-const input = useTemplateRef('input');
+// import
 
-const { width: inputWidth } = useElementSize(input);
-const { width: winWidth } = useWindowSize();
+// props
 
-const emit = defineEmits<{ (e: 'nextPhrase'): void }>();
+const props = defineProps({
+  phrase: String,
+  errors: Array,
+  isFinished: Boolean,
+  translate: String,
+  isLoading: Boolean,
+  hasError: Boolean
+});
 
+// props
+
+// emit
+const emit = defineEmits<{
+  (e: 'getNewPhrase'): void
+}>();
+// emit
+
+
+// model
+
+const updateModel = () => {
+  model.value = input.value?.value;
+}
 
 const model = defineModel<String>();
 
+// model
+
+// shift
+
+const input = useTemplateRef('input');
+const { width: inputWidth } = useElementSize(input);
+const { width: winWidth } = useWindowSize();
 
 const shift = ref(0);
 
-function resetShift() {
+const resetShift = () => {
   shift.value = 0;
 }
 
@@ -57,39 +85,25 @@ defineExpose({ resetShift });
 
 
 watch(model, (newVal) => {
-
+  if (!props.phrase) return;
   const difference = winWidth.value - inputWidth.value;
-
-  const currentLength = newVal.length;
+  const currentLength = newVal?.length ?? 0;
   const step = difference / props.phrase.length;
 
   const left = currentLength * step;
-
   shift.value = left < 0 ? left : 0;
 
-
+  
+  
 });
 
+// shift
 
 
-const updateModel = () => {
-  model.value = input.value?.value;
-}
 
-
-const props = defineProps({
-  phrase: String,
-  errors: Array,
-  disabled: Boolean,
-  translate: String,
-  isLoading: Boolean,
-  hasError: Boolean
-});
-
+// isReady
 
 const isReady = computed(() => !props.isLoading && !props.hasError);
-
-
 
 watch(isReady, async (newVal) => {
   if (newVal) {
@@ -98,6 +112,6 @@ watch(isReady, async (newVal) => {
   }
 });
 
-
+// isReady
 
 </script>
