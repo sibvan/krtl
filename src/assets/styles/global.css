@@ -17,7 +17,7 @@
 }
 
 body {
-  background: url("/bg.jpg") no-repeat center / cover;
+  background: linear-gradient(180deg, #FFF 0%, #D6E8F4 100%);
 }
 
 button {
