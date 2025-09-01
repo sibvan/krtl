@@ -42,6 +42,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-icon:hover {
+  background: var(--color-black);
+}
+
+.button-icon:hover .button-icon__ic {
+  filter: brightness(0) invert(1);
+}
+
+.button-icon__ic {
+  transition: all 0.2s ease-in-out;
 }
 
 .button-icon__bg {

@@ -51,11 +51,27 @@
   gap: 8px;
   align-items: center;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.header__button:hover .heaader__button-icon {
+  filter: brightness(0) invert(1);
+}
+
+.heaader__button-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+.header__button:hover {
+  background: var(--color-black);
+}
+.header__button:hover .header__button-text {
+  color: var(--color-white);
 }
 
 .header__button-text {
   color: var(--color-black);
   font-size: 16px;
+  transition: all 0.2s ease-in-out;
 }
 
 @media (max-width: 580.5px) {
@@ -69,5 +85,4 @@
   .statistics {
     gap: 8px;
   }
-  
 }

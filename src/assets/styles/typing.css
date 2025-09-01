@@ -10,6 +10,11 @@
   width: 100%;
 }
 
+.typing__input:hover {
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-black) 50%, transparent);
+}
+
 .typing__input {
   color: var(--color-black);
   font-size: 40px;
@@ -80,5 +85,3 @@
 .typing__line_error {
   background-color: var(--color-red);
 }
-
-

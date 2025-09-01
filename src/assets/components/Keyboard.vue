@@ -3,7 +3,7 @@
   <div class="keyboard">
     <div class="keyboard__left">
       <button class="button-icon">
-        <img src="/icons/vol-off.svg" alt="">
+        <img class="button-icon__ic" src="/icons/vol-off.svg" alt="">
       </button>
     </div>
     <div class="keyboard__center">
@@ -25,7 +25,7 @@
     </div>
     <div class="keyboard__right">
       <button class="button-icon">
-        <img class="button-icon__bg" src="/bg.jpg" alt="">
+        <img class="button-icon__bg" src="" alt="">
       </button>
     </div>
   </div>

@@ -13,7 +13,7 @@
       </li>
     </ul>
     <button @click="$emit('changeLang')" class="header__button">
-      <img src="/icons/language.svg" alt="">
+      <img class="heaader__button-icon" src="/icons/language.svg" alt="">
       <span class="header__button-text">{{ props.btnText }}</span>
     </button>
   </header>
