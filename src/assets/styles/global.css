@@ -16,7 +16,8 @@
 }
 
 body {
-  background: linear-gradient(180deg, #fff 0%, #d6e8f4 100%);
+  background: linear-gradient(180deg, #fff 0%, #d6e8f4 100%) no-repeat center /
+    cover;
 }
 
 button {

@@ -9,15 +9,16 @@
 
 <script setup lang="ts">
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { languages } from './keyboards';
 
 import Header from './assets/components/Header.vue';
 import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
+import { useBgsStore } from './stores/bgs';
 
-
+const bgsStore = useBgsStore();
 
 const currentLang = ref(languages.en);
 const phrase = ref("Something wrong with shower");
@@ -26,6 +27,12 @@ const start = ref(0);
 const isTyping = ref(false);
 const isFinished = ref(false);
 
+
+onMounted(async() => {
+  const bg = await bgsStore.getBgList();
+  
+  document.body.style.backgroundImage = `url(${bgsStore.getRandomBg()})`;
+});
 
 
 
