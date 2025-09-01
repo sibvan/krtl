@@ -80,4 +80,16 @@
 
 .typing__line_error {
   background-color: var(--color-red);
+  border-radius: 100px;
+  position: relative;
+}
+
+.typing__line_error + .typing__line_error::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--color-red);
+  left: -50%;
 }
