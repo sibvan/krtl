@@ -3,12 +3,12 @@
     <h1 class="header__logo">KRTL</h1>
     <ul class="statistics">
       <li class="statistics__item">
-        <p class="statistics__number">0</p>
+        <p class="statistics__number">{{ props.speed }}</p>
         <p class="statistics__description">скорость</p>
       </li>
       <li class="statistics__slash">/</li>
       <li class="statistics__item">
-        <p class="statistics__number">0</p>
+        <p class="statistics__number">{{ props.errors }}</p>
         <p class="statistics__description">ошибки</p>
       </li>
     </ul>
@@ -22,7 +22,9 @@
 <script setup lang="ts">
 
 const props = defineProps({
-  btnText: String
+  btnText: String,
+  errors: Number,
+  speed: Number
 });
 
 </script>

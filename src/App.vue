@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Header @change-lang="changeLang()" :btn-text="currentLang.btnText" />
-    <Typing v-model="inputModel" :phrase="phrase" :errors="errors" />
+    <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
+    <Typing :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
     <Keyboard :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { languages } from './keyboards';
 
 import Header from './assets/components/Header.vue';
@@ -22,7 +22,37 @@ import Keyboard from './assets/components/Keyboard.vue';
 const currentLang = ref(languages.ru);
 const phrase = ref("Something wrong with shower");
 const inputModel = ref("");
+const start = ref(0);
+const isTyping = ref(false);
+const isFinished = ref(false);
 
+
+
+
+watch(inputModel, (newVal) => {
+
+  if (newVal.length !== 0 && !isTyping.value) {
+    isTyping.value = true;
+    start.value = new Date().getTime();
+  }
+
+
+  if (newVal.length === phrase.value.length) {
+    isTyping.value = false;
+    isFinished.value = true;
+  }
+});
+
+
+const speed = computed(() => {
+
+  const typedChars = inputModel.value.length;
+  const timeElapsed = new Date().getTime() - start.value;
+
+  return Math.round(typedChars / timeElapsed * 60000) || 0;
+
+
+});
 
 const errors = computed(() => {
   const arr: number[] = [];

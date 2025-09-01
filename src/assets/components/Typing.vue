@@ -3,7 +3,7 @@
     <div class="typing">
       <div class="typing__text">
 
-        <input spellcheck="false" ref="input" v-if="props.phrase" :maxlength="props.phrase?.length"
+        <input :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase" :maxlength="props.phrase?.length"
           :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__input" type="text" name="" id=""
           :value="model" @input="updateModel">
 
@@ -11,7 +11,8 @@
           type="text" name="" id="" :value="props.phrase">
 
         <div class="typing__progress">
-          <div :class="['typing__line', {'typing__line_error' : errors?.includes(index)} ]" v-for="(char, index) in props.phrase" :key="index"></div>
+          <div :class="['typing__line', { 'typing__line_error': errors?.includes(index) }]"
+            v-for="(char, index) in props.phrase" :key="index"></div>
         </div>
 
       </div>
@@ -24,9 +25,17 @@
 
 <script setup lang="ts">
 
-import { useTemplateRef } from 'vue';
+import { useTemplateRef, onMounted } from 'vue';
 
-const input = useTemplateRef('input')
+const input = useTemplateRef('input');
+
+onMounted(() => {
+
+
+  input.value?.focus();
+});
+
+
 
 
 const model = defineModel();
@@ -39,7 +48,8 @@ const updateModel = () => {
 
 const props = defineProps({
   phrase: String,
-  errors: Array
+  errors: Array,
+  disabled: Boolean
 });
 
 
