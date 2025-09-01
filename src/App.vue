@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="!isLoading">
     <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
-    <Typing :translate="translate" :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
+    <Typing @next-phrase="getNewPhrase" :translate="translate" :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
     <Keyboard :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
@@ -34,10 +34,10 @@ const isFinished = ref(false);
 const isLoading = ref(true);
 
 
-onMounted(async() => {
+onMounted(async () => {
   await phrasesStore.getPhraseList();
   await bgsStore.getBgList();
-  
+
   document.body.style.backgroundImage = `url(${bgsStore.getRandomBg()})`;
   getNewPhrase();
 
@@ -48,7 +48,9 @@ const getNewPhrase = () => {
   const randomPhrase = phrasesStore.getRandomPhrase();
   phrase.value = randomPhrase[currentLang.value.title];
 
-  translate.value = currentLang.value.title === "ru" ? randomPhrase.en : randomPhrase.ru
+  translate.value = currentLang.value.title === "ru" ? randomPhrase.en : randomPhrase.ru;
+  inputModel.value = "";
+  isFinished.value = false;
 }
 
 

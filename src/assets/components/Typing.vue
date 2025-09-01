@@ -17,13 +17,16 @@
 
       </div>
       <div class="typing__translate">
-        <p>{{ translate }}</p>
+        <p class="typing__tranlation" v-if="!disabled">{{ translate }}</p>
+        <p @click="$emit('nextPhrase')" class="typing__button" v-else>Следующая фраза</p>
       </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
+
+
 
 import { useTemplateRef, onMounted, computed } from 'vue';
 import { useElementSize, useWindowSize } from '@vueuse/core';

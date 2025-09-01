@@ -1,5 +1,4 @@
-.main {
-}
+
 
 .typing {
   text-align: center;
@@ -46,16 +45,27 @@
   background-color: transparent;
   border: none;
   padding-bottom: 24px;
-  box-sizing: border-box;
   pointer-events: none;
   opacity: 0.2;
   z-index: 1;
 }
 
+.typing__button {
+  cursor: pointer;
+  animation: animation-blink 1s infinite alternate ease-in-out;
+  padding: 16px 24px;
+  display: inline-block;
+  border-radius: 100px;
+}
+
+.typing__tranlation {
+  opacity: .5;
+}
+
 .typing__translate {
   color: var(--color-black);
   font-size: 24px;
-  opacity: 0.5;
+  opacity: 1;
   text-align: center;
   line-height: 145%;
   width: calc((100% + 24px) / 3 * 2);

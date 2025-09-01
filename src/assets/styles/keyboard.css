@@ -79,9 +79,6 @@
 }
 
 @keyframes animation-blink {
-  from {
-    background: var(--color-white);
-  }
   to {
     background: var(--color-blue);
   }
