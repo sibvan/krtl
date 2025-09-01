@@ -80,7 +80,7 @@
 
 @keyframes animation-blink {
   from {
-    background: var(--color-white)
+    background: var(--color-white);
   }
   to {
     background: var(--color-blue);
@@ -219,4 +219,19 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .keyboard__center {
+    display: none;
+  }
+  .keyboard__left, .keyboard__right {
+    flex: unset;
+  }
+  .keyboard {
+    gap: 24px;
+    justify-content: center;
+  }
+
+
 }
