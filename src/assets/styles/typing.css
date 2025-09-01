@@ -56,10 +56,12 @@
   padding: 16px 24px;
   display: inline-block;
   border-radius: 100px;
+  margin-top: 24px;
 }
 
 .typing__tranlation {
   opacity: .5;
+  margin-top: 40px;
 }
 
 .typing__translate {
@@ -70,7 +72,7 @@
   line-height: 145%;
   width: calc((100% + 24px) / 3 * 2);
   margin: 0 auto;
-  margin-top: 40px;
+  /* margin-top: 40px; */
 }
 
 .typing__progress {
