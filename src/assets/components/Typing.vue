@@ -13,7 +13,7 @@
 
         <div class="typing__progress">
           <div :class="['typing__line', { 'typing__line_error': errors?.includes(index) }]"
-            v-for="(char, index) in props.phrase" :key="index"></div>
+            v-for="(_, index) in props.phrase" :key="index"></div>
         </div>
 
       </div>
