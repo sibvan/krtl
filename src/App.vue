@@ -1,8 +1,9 @@
 <template>
-  <div class="container" v-if="!isLoading">
+  <div class="container">
     <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
-    <Typing @next-phrase="getNewPhrase" :translate="translate" :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
-    <Keyboard :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
+    <Typing :hasError="hasError" :isLoading="isLoading" @next-phrase="getNewPhrase" :translate="translate" :disabled="isFinished" v-model="inputModel"
+      :phrase="phrase" :errors="errors" />
+    <Keyboard v-if="!isLoading && !hasError" :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
 </template>
@@ -32,16 +33,22 @@ const isTyping = ref(false);
 const isFinished = ref(false);
 
 const isLoading = ref(true);
+const hasError = ref(false);
 
 
 onMounted(async () => {
-  await phrasesStore.getPhraseList();
-  await bgsStore.getBgList();
 
-  document.body.style.backgroundImage = `url(${bgsStore.getRandomBg()})`;
-  getNewPhrase();
+  try {
+    await phrasesStore.getPhraseList();
+    await bgsStore.getBgList();
+    document.body.style.backgroundImage = `url(${bgsStore.getRandomBg()})`;
+    getNewPhrase();
+  } catch {
+    hasError.value = true;
+  } finally {
+    isLoading.value = false;
+  }
 
-  isLoading.value = false;
 });
 
 const getNewPhrase = () => {

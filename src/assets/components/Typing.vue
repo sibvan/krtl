@@ -1,11 +1,11 @@
 <template>
   <main class="main">
     <div class="typing">
-      <div class="typing__text" :style="{ 'left': shift + 'px' }">
+      <div v-if="!isLoading && !hasError" class="typing__text" :style="{ 'left': shift + 'px' }">
 
-        <input autocomplete="off" :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase" :maxlength="props.phrase?.length"
-          :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__input" type="text" name="" id=""
-          :value="model" @input="updateModel">
+        <input autocomplete="off" :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase"
+          :maxlength="props.phrase?.length" :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__input"
+          type="text" name="" id="" :value="model" @input="updateModel">
 
         <input v-if="props.phrase" :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__phrase"
           type="text" name="" id="" :value="props.phrase">
@@ -17,8 +17,13 @@
 
       </div>
       <div class="typing__translate">
-        <p class="typing__tranlation" v-if="!disabled">{{ translate }}</p>
-        <p @click="$emit('nextPhrase')" class="typing__button" v-else>Следующая фраза</p>
+
+        <p class="typing__button" v-if="isLoading">Данные загружаются</p>
+        <p class="typing__tranlation" v-if="hasError">Произошла ошибка</p>
+        <p @click="$emit('nextPhrase')" class="typing__button" v-if="disabled">Следующая фраза</p>
+
+        <p class="typing__tranlation" v-if="!disabled && !isLoading && !hasError">{{ translate }}</p>
+
       </div>
     </div>
   </main>
@@ -69,7 +74,9 @@ const props = defineProps({
   phrase: String,
   errors: Array,
   disabled: Boolean,
-  translate: String
+  translate: String,
+  isLoading: Boolean,
+  hasError: Boolean
 });
 
 
