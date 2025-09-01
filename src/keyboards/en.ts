@@ -107,7 +107,7 @@ export const keyboardEn: Keyboard = [
       align: "right",
       opacity: true,
     },
-    { content: "", size: 504, type: "text" },
+    { content: " ", size: 504, type: "text" },
     {
       content: ["⌘", "command"],
       size: 144,

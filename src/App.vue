@@ -2,7 +2,7 @@
   <div class="container">
     <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
     <Typing :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
-    <Keyboard :keyboard="currentLang.keyboard" />
+    <Keyboard :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
 </template>
@@ -19,7 +19,7 @@ import Keyboard from './assets/components/Keyboard.vue';
 
 
 
-const currentLang = ref(languages.ru);
+const currentLang = ref(languages.en);
 const phrase = ref("Something wrong with shower");
 const inputModel = ref("");
 const start = ref(0);
@@ -64,6 +64,9 @@ const errors = computed(() => {
   return arr;
 });
 
+const nextLetter = computed(() => {
+  return phrase.value[inputModel.value.length];
+});
 
 
 const changeLang = () => {

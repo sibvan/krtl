@@ -73,6 +73,19 @@
   display: flex;
 }
 
+.keyboard__key_animation-blink {
+  animation: animation-blink 1s infinite alternate ease-in-out;
+}
+
+@keyframes animation-blink {
+  from {
+    background: var(--color-white)
+  }
+  to {
+    background: var(--color-blue);
+  }
+}
+
 .keyboard__row {
   display: flex;
   gap: min(calc(100dvw * (12 / 2430)), calc(1710px * (12 / 2430)));

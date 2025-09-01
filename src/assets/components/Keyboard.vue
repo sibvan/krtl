@@ -36,10 +36,11 @@
 <script setup lang="ts">
 
 import type { Keyboard, KeyboardKey } from '../../types';
-
+import { computed } from 'vue';
 
 const props = defineProps<{
-  keyboard: Keyboard
+  keyboard: Keyboard,
+  nextLetter?: string
 }>();
 
 const getContent = (button: KeyboardKey) => {
@@ -48,12 +49,33 @@ const getContent = (button: KeyboardKey) => {
     : button.content;
 };
 
+
+
 const getClass = (button: KeyboardKey) => {
+
   const arrClass = [];
+  const content = getContent(button);
+  const nextCharIsLetter = props.nextLetter?.toLowerCase() !== props.nextLetter?.toUpperCase();
+  const nextCharisCapital = props.nextLetter === props.nextLetter?.toUpperCase();
+
 
   arrClass.push("keyboard__key");
   arrClass.push(`keyboard__key_size-${button.size}`);
   arrClass.push(`keyboard__key_type-${button.type}`);
+
+
+  if (button.content === "shift" && nextCharIsLetter && nextCharisCapital) {
+    arrClass.push("keyboard__key_animation-blink");
+  }
+
+
+  if (props.nextLetter && typeof content === "string") {
+    if (props.nextLetter.toLowerCase() === content.toLowerCase()) {
+      arrClass.push("keyboard__key_animation-blink");
+    }
+
+
+  }
 
   if (button.extraClass) arrClass.push(button.extraClass);
   if (button.align) arrClass.push(`keyboard__key_align-${button.align}`);
