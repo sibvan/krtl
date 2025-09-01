@@ -3,7 +3,7 @@
     <div class="typing">
       <div class="typing__text" :style="{ 'left': shift + 'px' }">
 
-        <input :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase" :maxlength="props.phrase?.length"
+        <input autocomplete="off" :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase" :maxlength="props.phrase?.length"
           :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__input" type="text" name="" id=""
           :value="model" @input="updateModel">
 
@@ -17,7 +17,7 @@
 
       </div>
       <div class="typing__translate">
-        <p>Что-то случилось с душем</p>
+        <p>{{ translate }}</p>
       </div>
     </div>
   </main>
@@ -65,7 +65,8 @@ const updateModel = () => {
 const props = defineProps({
   phrase: String,
   errors: Array,
-  disabled: Boolean
+  disabled: Boolean,
+  translate: String
 });
 
 

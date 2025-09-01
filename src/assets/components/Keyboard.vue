@@ -1,8 +1,8 @@
 <template>
 
   <div class="keyboard">
-    <div class="keyboard__left">
-      <button class="button-icon">
+    <div class="keyboard__left" >
+      <button class="button-icon" v-show="false">
         <img class="button-icon__ic" src="/icons/vol-off.svg" alt="">
       </button>
     </div>
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="keyboard__right">
-      <button class="button-icon">
+      <button class="button-icon" v-show="false">
         <img class="button-icon__bg" src="" alt="">
       </button>
     </div>

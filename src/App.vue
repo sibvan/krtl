@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!isLoading">
     <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
-    <Typing :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
+    <Typing :translate="translate" :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
     <Keyboard :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
@@ -17,22 +17,39 @@ import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
 import { useBgsStore } from './stores/bgs';
+import { usePhrasesStore } from './stores/phrases';
+
 
 const bgsStore = useBgsStore();
+const phrasesStore = usePhrasesStore();
 
 const currentLang = ref(languages.en);
-const phrase = ref("Something wrong with shower");
+const phrase = ref("");
+const translate = ref("");
 const inputModel = ref("");
 const start = ref(0);
 const isTyping = ref(false);
 const isFinished = ref(false);
 
+const isLoading = ref(true);
+
 
 onMounted(async() => {
-  const bg = await bgsStore.getBgList();
+  await phrasesStore.getPhraseList();
+  await bgsStore.getBgList();
   
   document.body.style.backgroundImage = `url(${bgsStore.getRandomBg()})`;
+  getNewPhrase();
+
+  isLoading.value = false;
 });
+
+const getNewPhrase = () => {
+  const randomPhrase = phrasesStore.getRandomPhrase();
+  phrase.value = randomPhrase[currentLang.value.title];
+
+  translate.value = currentLang.value.title === "ru" ? randomPhrase.en : randomPhrase.ru
+}
 
 
 
@@ -95,7 +112,7 @@ const changeLang = () => {
   newLang = langList[newId];
 
   currentLang.value = languages[newLang];
-
+  getNewPhrase();
 }
 
 
