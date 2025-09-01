@@ -45,13 +45,20 @@ watch(inputModel, (newVal) => {
 
 
 const speed = computed(() => {
-
   const typedChars = inputModel.value.length;
-  const timeElapsed = new Date().getTime() - start.value;
+  const phraseLength = phrase.value.length;
 
-  return Math.round(typedChars / timeElapsed * 60000) || 0;
+  if (typedChars === 0) return 0;
 
+  // коэффициент сглаживания: от 0 до 1 пропорционально прогрессу в фразе
+  const smoothing = Math.min(typedChars / phraseLength, 1);
 
+  const elapsed = new Date().getTime() - start.value; // мс
+  if (elapsed <= 0) return 0;
+
+  const rawSpeed = (typedChars / elapsed) * 60000;
+
+  return Math.round(rawSpeed * smoothing);
 });
 
 const errors = computed(() => {
