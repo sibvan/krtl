@@ -16,6 +16,7 @@
   background: color-mix(in srgb, var(--color-white) 50%, transparent)
     url("/noise.png") no-repeat center / cover;
   border-radius: min(calc(100dvw * (48 / 2430)), calc(1710px * (48 / 2430)));
+  backdrop-filter: blur(15px);
 }
 
 .keyboard__rows {
