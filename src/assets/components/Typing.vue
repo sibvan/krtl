@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <div class="typing">
-      <div class="typing__text">
+      <div class="typing__text" :style="{ 'left': shift + 'px' }">
 
         <input :disabled="disabled" spellcheck="false" ref="input" v-if="props.phrase" :maxlength="props.phrase?.length"
           :style="{ width: `${props.phrase?.length + 0.2}ch` }" class="typing__input" type="text" name="" id=""
@@ -25,24 +25,40 @@
 
 <script setup lang="ts">
 
-import { useTemplateRef, onMounted } from 'vue';
+import { useTemplateRef, onMounted, computed } from 'vue';
+import { useElementSize, useWindowSize } from '@vueuse/core';
 
 const input = useTemplateRef('input');
 
+const { width: inputWidth } = useElementSize(input);
+const { width: winWidth } = useWindowSize();
+
 onMounted(() => {
-
-
   input.value?.focus();
 });
 
 
+const model = defineModel<String>();
 
 
-const model = defineModel();
+
+const shift = computed(() => {
+
+  if (model.value && props.phrase) {
+    const difference = winWidth.value - inputWidth.value;
+
+    const currentLength = model.value.length;
+    const step = difference / props.phrase.length;
+
+    const shift = currentLength * step;
+
+    return shift < 0 ? shift : 0;
+  }
+
+});
 
 const updateModel = () => {
   model.value = input.value?.value;
-
 }
 
 

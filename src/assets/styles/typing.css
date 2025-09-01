@@ -1,13 +1,10 @@
 .main {
-  width: calc(100% + 12px);
-  position: relative;
-  left: 6px;
-  overflow-x: hidden;
 }
 
 .typing {
   text-align: center;
-  width: 100%;
+  width: 100dvw;
+  overflow-x: hidden;
 }
 
 .typing__input:hover {
@@ -40,7 +37,6 @@
 .typing__text {
   display: inline-block;
   position: relative;
-  width: min-content;
 }
 
 .typing__phrase {

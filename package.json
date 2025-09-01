@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^13.8.0",
     "reset-css": "^5.0.2",
     "vue": "^3.5.18",
     "vue-input-autowidth": "^1.0.11"
