@@ -20,7 +20,7 @@
 
         <p class="typing__button" v-if="isLoading">Данные загружаются</p>
         <p class="typing__tranlation" v-if="hasError">Произошла ошибка</p>
-        <p @click="$emit('nextPhrase')" class="typing__button" v-if="disabled">Следующая фраза</p>
+        <p @click="emit('nextPhrase')" class="typing__button" v-if="disabled">Следующая фраза</p>
 
         <p class="typing__tranlation" v-if="!disabled && !isLoading && !hasError">{{ translate }}</p>
 
@@ -33,7 +33,7 @@
 
 
 
-import { useTemplateRef, onMounted, computed } from 'vue';
+import { useTemplateRef, computed, watch, nextTick, defineExpose, ref } from 'vue';
 import { useElementSize, useWindowSize } from '@vueuse/core';
 
 const input = useTemplateRef('input');
@@ -41,29 +41,36 @@ const input = useTemplateRef('input');
 const { width: inputWidth } = useElementSize(input);
 const { width: winWidth } = useWindowSize();
 
-onMounted(() => {
-  input.value?.focus();
-});
+const emit = defineEmits<{ (e: 'nextPhrase'): void }>();
 
 
 const model = defineModel<String>();
 
 
+const shift = ref(0);
 
-const shift = computed(() => {
+function resetShift() {
+  shift.value = 0;
+}
 
-  if (model.value && props.phrase) {
-    const difference = winWidth.value - inputWidth.value;
+defineExpose({ resetShift });
 
-    const currentLength = model.value.length;
-    const step = difference / props.phrase.length;
 
-    const shift = currentLength * step;
+watch(model, (newVal) => {
 
-    return shift < 0 ? shift : 0;
-  }
+  const difference = winWidth.value - inputWidth.value;
+
+  const currentLength = newVal.length;
+  const step = difference / props.phrase.length;
+
+  const left = currentLength * step;
+
+  shift.value = left < 0 ? left : 0;
+
 
 });
+
+
 
 const updateModel = () => {
   model.value = input.value?.value;
@@ -78,6 +85,19 @@ const props = defineProps({
   isLoading: Boolean,
   hasError: Boolean
 });
+
+
+const isReady = computed(() => !props.isLoading && !props.hasError);
+
+
+
+watch(isReady, async (newVal) => {
+  if (newVal) {
+    await nextTick();
+    input.value?.focus();
+  }
+});
+
 
 
 </script>

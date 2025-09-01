@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <Header @change-lang="changeLang()" :speed="speed" :errors="errors.length" :btn-text="currentLang.btnText" />
-    <Typing :hasError="hasError" :isLoading="isLoading" @next-phrase="getNewPhrase" :translate="translate" :disabled="isFinished" v-model="inputModel"
-      :phrase="phrase" :errors="errors" />
+    <Typing ref="typingRef" :hasError="hasError" :isLoading="isLoading" @nextPhrase="getNewPhrase" :translate="translate"
+      :disabled="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
     <Keyboard v-if="!isLoading && !hasError" :nextLetter="nextLetter" :keyboard="currentLang.keyboard" />
     <Footer />
   </div>
@@ -31,6 +31,8 @@ const inputModel = ref("");
 const start = ref(0);
 const isTyping = ref(false);
 const isFinished = ref(false);
+const typingRef = ref(null);
+
 
 const isLoading = ref(true);
 const hasError = ref(false);
@@ -54,10 +56,11 @@ onMounted(async () => {
 const getNewPhrase = () => {
   const randomPhrase = phrasesStore.getRandomPhrase();
   phrase.value = randomPhrase[currentLang.value.title];
-
   translate.value = currentLang.value.title === "ru" ? randomPhrase.en : randomPhrase.ru;
   inputModel.value = "";
   isFinished.value = false;
+  typingRef.value?.resetShift();
+
 }
 
 
