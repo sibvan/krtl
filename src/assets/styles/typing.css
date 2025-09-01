@@ -1,5 +1,8 @@
 .main {
-  width: 100%;
+  width: calc(100% + 12px);
+  position: relative;
+  left: 6px;
+  overflow-x: hidden;
 }
 
 .typing {
