@@ -1,10 +1,12 @@
+const apiKey = import.meta.env.VITE_API_KEY;
+
 export async function getData(dataType: string) {
   const url = "https://s1112388.smrtp.ru/krtl/api/content/items/" + dataType;
   try {
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "api-key": "API-3db20fa9a7c6318f1acdd670583342782170f725",
+        "api-key": apiKey,
       },
     });
 
