@@ -24,6 +24,8 @@ import { usePhrasesStore } from './stores/phrases';
 
 import type { Phrase } from './types';
 
+import buttonPressSound from "./assets/sounds/button-press.mp3"
+
 const bgsStore = useBgsStore();
 const phrasesStore = usePhrasesStore();
 
@@ -39,6 +41,7 @@ const isFinished = ref(false);
 const typingRef = ref<any>(null);
 const isLoading = ref(true);
 const hasError = ref(false);
+
 
 
 
@@ -99,7 +102,7 @@ const getNewPhrase = () => {
 }
 
 const changeLang = () => {
-  
+
   const langList = Object.keys(languages) as (keyof typeof languages)[];
   const langId = langList.findIndex(item => item === currentLang.value.title);
 
@@ -112,6 +115,7 @@ const changeLang = () => {
   currentLang.value = languages[newLang];
   getNewPhrase();
 }
+
 
 
 
@@ -130,6 +134,12 @@ watch(inputModel, (newVal) => {
   }
 });
 
+watch(errors, (newVal, oldVal) => {
+  if (newVal.length > oldVal.length) {
+    const audio = new Audio(buttonPressSound);
+    audio.play();
+  }
+});
 
 
 </script>
