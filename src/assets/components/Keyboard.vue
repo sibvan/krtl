@@ -1,8 +1,9 @@
 <template>
   <div class="keyboard">
     <div class="keyboard__left">
-      <button class="button-icon" v-show="false">
-        <img class="button-icon__ic" src="/icons/vol-off.svg" alt="">
+      <button class="button-icon" @click="$emit('switchVolume')">
+        <img v-if="!volume" class="button-icon__ic" src="/icons/vol-off.svg" alt="">
+        <img v-else class="button-icon__ic" src="/icons/vol-on.svg" alt="">
       </button>
     </div>
     <div class="keyboard__center">
@@ -37,7 +38,8 @@ import type { Keyboard, KeyboardKey } from '../../types';
 
 const props = defineProps<{
   keyboard: Keyboard,
-  nextLetter?: string
+  nextLetter?: string,
+  volume: boolean
 }>();
 
 

@@ -3,7 +3,8 @@
     <Header :speed="speed" :errors-number="errorsNumber" :btn-text="btnText" @change-lang="changeLang()" />
     <Typing ref="typingRef" :has-error="hasError" :is-loading="isLoading" @get-new-phrase="getNewPhrase"
       :translate="translate" :is-finished="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
-    <Keyboard v-if="!isLoading && !hasError" :next-letter="nextLetter" :keyboard="keyboard" />
+    <Keyboard v-if="!isLoading && !hasError" :next-letter="nextLetter" :keyboard="keyboard" :volume="volume"
+      @switch-volume="switchVolume" />
     <Footer />
   </div>
 </template>
@@ -16,11 +17,13 @@ import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
 
 import { ref, computed, watch, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 
 import { languages } from './keyboards';
 
 import { useBgsStore } from './stores/bgs';
 import { usePhrasesStore } from './stores/phrases';
+import { useSettingsStore } from './stores/settings';
 
 import type { Phrase } from './types';
 
@@ -28,8 +31,9 @@ import buttonPressSound from "./assets/sounds/button-press.mp3"
 
 const bgsStore = useBgsStore();
 const phrasesStore = usePhrasesStore();
-
-
+const settingsStore = useSettingsStore();
+const { switchVolume } = settingsStore;
+const { volume } = storeToRefs(settingsStore);
 
 const currentLang = ref(languages.en);
 const phrase = ref("");
@@ -92,6 +96,7 @@ const speed = computed(() => {
 });
 
 
+
 const getNewPhrase = () => {
   const randomPhrase: Phrase = phrasesStore.getRandomPhrase();
   phrase.value = randomPhrase[currentLang.value.title as keyof Phrase];
@@ -135,6 +140,7 @@ watch(inputModel, (newVal) => {
 });
 
 watch(errors, (newVal, oldVal) => {
+  if (!volume.value) return;
   if (newVal.length > oldVal.length) {
     const audio = new Audio(buttonPressSound);
     audio.play();
