@@ -1,4 +1,4 @@
-<template >
+<template>
   <main class="main">
 
     <div class="typing">
@@ -6,7 +6,7 @@
 
         <input autocomplete="off" :disabled="isFinished" spellcheck="false" ref="input" v-if="props.phrase"
           :maxlength="props.phrase?.length" :style="{ width: `${props.phrase?.length}ch` }" class="typing__input"
-          type="text" name="" id="" :value="model" @input="updateModel" >
+          type="text" name="" id="" :value="model" @input="updateModel">
 
         <input v-if="props.phrase" :style="{ width: `${props.phrase?.length}ch` }" class="typing__phrase" type="text"
           name="" id="" :value="props.phrase">
@@ -90,17 +90,15 @@ const resetShift = () => {
 defineExpose({ resetShift });
 
 
-watch(model, (newVal) => {
+watch([model, winWidth], ([newModel, newWinWidth], _) => {
   if (!props.phrase) return;
-  const difference = winWidth.value - inputWidth.value;
-  const currentLength = newVal?.length ?? 0;
+
+  const difference = newWinWidth - inputWidth.value;
+  const currentLength = newModel?.length ?? 0;
   const step = difference / props.phrase.length;
 
   const left = currentLength * step;
   shift.value = left < 0 ? left : 0;
-
-
-
 });
 
 // shift
