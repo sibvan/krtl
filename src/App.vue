@@ -1,5 +1,5 @@
 <template>
-  <div class="container" >
+  <div class="container">
     <Header :speed="speed" :errors-number="errorsNumber" :btn-text="btnText" @change-lang="changeLang()" />
     <Typing ref="typingRef" :has-error="hasError" :is-loading="isLoading" @get-new-phrase="getNewPhrase"
       :translate="translate" :is-finished="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
@@ -10,14 +10,13 @@
 </template>
 
 <script setup lang="ts">
-
+import { onKeyStroke } from '@vueuse/core'
 
 import Header from './assets/components/Header.vue';
 import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
 
-import { onKeyStroke } from '@vueuse/core'
 import { ref, computed, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 
@@ -31,7 +30,9 @@ import type { Phrase } from './types';
 
 import buttonPressSound from "./assets/sounds/button-press.mp3"
 
+
 const bgsStore = useBgsStore();
+const { currentBg } = storeToRefs(bgsStore);
 const phrasesStore = usePhrasesStore();
 const settingsStore = useSettingsStore();
 const { switchVolume } = settingsStore;
@@ -56,7 +57,7 @@ onMounted(async () => {
   try {
     await phrasesStore.getPhraseList();
     await bgsStore.getBgList();
-    document.body.style.backgroundImage = `url(${bgsStore.getRandomBg()})`;
+    bgsStore.getRandomBg();
     getNewPhrase();
   } catch {
     hasError.value = true;
@@ -97,9 +98,7 @@ const speed = computed(() => {
   return Math.round(rawSpeed * smoothing);
 });
 
-onKeyStroke('Enter', () => {
-  getNewPhrase();
-})
+
 
 const getNewPhrase = () => {
   const randomPhrase: Phrase = phrasesStore.getRandomPhrase();
@@ -109,6 +108,10 @@ const getNewPhrase = () => {
   isFinished.value = false;
   typingRef.value?.resetShift();
 }
+
+onKeyStroke('Enter', () => {
+  getNewPhrase();
+})
 
 const changeLang = () => {
 
@@ -125,6 +128,11 @@ const changeLang = () => {
   getNewPhrase();
 }
 
+
+
+watch(currentBg, (newBg) => {
+  document.body.style.backgroundImage = `url(${newBg})`;
+});
 
 
 

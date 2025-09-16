@@ -21,8 +21,8 @@
       </div>
     </div>
     <div class="keyboard__right">
-      <button class="button-icon" v-show="false">
-        <img class="button-icon__bg" src="" alt="">
+      <button class="button-icon">
+        <img @click="bgsStore.getRandomBg" class="button-icon__bg" :src="bgsStore.currentBg" alt="">
       </button>
     </div>
   </div>
@@ -34,6 +34,9 @@
 
 
 import type { Keyboard, KeyboardKey } from '../../types';
+import { useBgsStore } from '../../stores/bgs';
+
+const bgsStore = useBgsStore();
 
 
 const props = defineProps<{
