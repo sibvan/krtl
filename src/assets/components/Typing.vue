@@ -8,8 +8,8 @@
           :maxlength="props.phrase?.length" :style="{ width: `${props.phrase?.length}ch` }" class="typing__input"
           type="text" name="" id="" :value="model" @input="updateModel">
 
-        <input v-if="props.phrase" :style="{ width: `${props.phrase?.length}ch` }" class="typing__phrase"
-          type="text" name="" id="" :value="props.phrase">
+        <input v-if="props.phrase" :style="{ width: `${props.phrase?.length}ch` }" class="typing__phrase" type="text"
+          name="" id="" :value="props.phrase">
 
         <div class="typing__progress">
           <div :class="['typing__line', { 'typing__line_error': errors?.includes(index) }]"
@@ -21,7 +21,7 @@
 
         <p class="typing__button" v-if="isLoading">Данные загружаются</p>
         <p class="typing__tranlation" v-if="hasError">Произошла ошибка</p>
-        <p @click="emit('getNewPhrase')" class="typing__button" v-if="isFinished">Следующая фраза</p>
+        <p @click="getNewPhrase" class="typing__button" v-if="isFinished">Следующая фраза</p>
 
         <p class="typing__tranlation" v-if="!isFinished && !isLoading && !hasError">{{ translate }}</p>
 
@@ -53,9 +53,15 @@ const props = defineProps({
 // props
 
 // emit
-const emit = defineEmits<{
-  (e: 'getNewPhrase'): void
-}>();
+const emit = defineEmits(["getNewPhrase"]);
+
+const getNewPhrase = async () => {
+  emit("getNewPhrase");
+
+  // await nextTick();
+  input.value?.focus();
+}
+
 // emit
 
 
@@ -93,8 +99,8 @@ watch(model, (newVal) => {
   const left = currentLength * step;
   shift.value = left < 0 ? left : 0;
 
-  
-  
+
+
 });
 
 // shift
