@@ -151,11 +151,12 @@ watch(inputModel, (newVal) => {
   }
 });
 
+const audio = new Audio(buttonPressSound);
+
 watch(errors, (newVal, oldVal) => {
-  if (!volume.value) return;
-  if (newVal.length > oldVal.length) {
-    const audio = new Audio(buttonPressSound);
-    audio.play();
+  if (!volume.value || !audio.paused) return;
+  if (newVal.length > oldVal.length) { 
+    audio.play();             
   }
 });
 
