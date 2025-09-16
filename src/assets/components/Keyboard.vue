@@ -68,6 +68,10 @@ const getClass = (button: KeyboardKey) => {
     arrClass.push("keyboard__key_animation-blink");
   }
 
+  if (button.content === "return" && !props.nextLetter) {
+    arrClass.push("keyboard__key_animation-blink");
+  }
+
 
   if (props.nextLetter && typeof content === "string") {
     if (props.nextLetter.toLowerCase() === content.toLowerCase()) {

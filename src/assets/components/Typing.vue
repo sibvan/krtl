@@ -1,4 +1,4 @@
-<template>
+<template >
   <main class="main">
 
     <div class="typing">
@@ -6,7 +6,7 @@
 
         <input autocomplete="off" :disabled="isFinished" spellcheck="false" ref="input" v-if="props.phrase"
           :maxlength="props.phrase?.length" :style="{ width: `${props.phrase?.length}ch` }" class="typing__input"
-          type="text" name="" id="" :value="model" @input="updateModel">
+          type="text" name="" id="" :value="model" @input="updateModel" >
 
         <input v-if="props.phrase" :style="{ width: `${props.phrase?.length}ch` }" class="typing__phrase" type="text"
           name="" id="" :value="props.phrase">

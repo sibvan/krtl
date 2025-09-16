@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <Header :speed="speed" :errors-number="errorsNumber" :btn-text="btnText" @change-lang="changeLang()" />
     <Typing ref="typingRef" :has-error="hasError" :is-loading="isLoading" @get-new-phrase="getNewPhrase"
       :translate="translate" :is-finished="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
@@ -11,11 +11,13 @@
 
 <script setup lang="ts">
 
+
 import Header from './assets/components/Header.vue';
 import Footer from './assets/components/Footer.vue';
 import Typing from './assets/components/Typing.vue';
 import Keyboard from './assets/components/Keyboard.vue';
 
+import { onKeyStroke } from '@vueuse/core'
 import { ref, computed, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 
@@ -95,7 +97,9 @@ const speed = computed(() => {
   return Math.round(rawSpeed * smoothing);
 });
 
-
+onKeyStroke('Enter', () => {
+  getNewPhrase();
+})
 
 const getNewPhrase = () => {
   const randomPhrase: Phrase = phrasesStore.getRandomPhrase();
