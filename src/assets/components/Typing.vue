@@ -58,7 +58,7 @@ const emit = defineEmits(["getNewPhrase"]);
 const getNewPhrase = async () => {
   emit("getNewPhrase");
 
-  // await nextTick();
+  await nextTick();
   input.value?.focus();
 }
 
