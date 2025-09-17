@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header :speed="speed" :errors-number="errorsNumber" :btn-text="btnText" @change-lang="changeLang()" />
-    <Typing ref="typingRef" :has-error="hasError" :is-loading="isLoading" @get-new-phrase="getNewPhrase"
+    <Typing :current-lang="currentLang.title" ref="typingRef" :has-error="hasError" :is-loading="isLoading" @get-new-phrase="getNewPhrase"
       :translate="translate" :is-finished="isFinished" v-model="inputModel" :phrase="phrase" :errors="errors" />
     <Keyboard v-if="!isLoading && !hasError" :next-letter="nextLetter" :keyboard="keyboard" :volume="volume"
       @switch-volume="switchVolume" />

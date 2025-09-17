@@ -2,6 +2,7 @@
   text-align: center;
   width: 100dvw;
   overflow-x: hidden;
+  position: relative;
 }
 
 .typing__input:hover {
@@ -101,4 +102,26 @@
   display: block;
   background: var(--color-red);
   left: -50%;
+}
+
+.typing__btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 59.5px;
+  border-radius: 100px;
+  z-index: 1000;
+  cursor: pointer;
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .2s ease-in-out;
+}
+
+.typing__btn:hover {
+  box-shadow: inset 0px 0px 0px 11px var(--color-black);
 }

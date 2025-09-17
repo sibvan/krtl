@@ -2,6 +2,9 @@
   <main class="main">
 
     <div class="typing">
+      <button @click="speak" v-if="!isLoading && !hasError" class="typing__btn">
+        <img class="" src="/icons/play.svg" alt="">
+      </button>
       <div v-if="!isLoading && !hasError" class="typing__text" :style="{ 'left': shift + 'px' }">
 
         <input autocomplete="off" :disabled="isFinished" spellcheck="false" ref="input" v-if="props.phrase"
@@ -39,6 +42,7 @@ import { useElementSize, useWindowSize } from '@vueuse/core';
 
 // import
 
+
 // props
 
 const props = defineProps({
@@ -47,7 +51,8 @@ const props = defineProps({
   isFinished: Boolean,
   translate: String,
   isLoading: Boolean,
-  hasError: Boolean
+  hasError: Boolean,
+  currentLang: String
 });
 
 // props
@@ -117,5 +122,22 @@ watch(isReady, async (newVal) => {
 });
 
 // isReady
+
+
+// speech
+const speak = () => {
+  const speech = props.currentLang === "en" ? props.phrase : props.translate;
+  const utterance = new SpeechSynthesisUtterance(speech);
+  const synth = window.speechSynthesis;
+  const voices = synth.getVoices();
+  const enVoices = voices.filter(v => v.lang.startsWith("en"));
+  utterance.voice = enVoices[Math.floor(Math.random() * enVoices.length)];
+  synth.cancel();
+  synth.speak(utterance);
+  console.log(utterance.voice.name);
+
+};
+
+// speech
 
 </script>
