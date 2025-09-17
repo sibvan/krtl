@@ -56,13 +56,18 @@ onMounted(async () => {
 
   try {
     await phrasesStore.getPhraseList();
-    await bgsStore.getBgList();
-    bgsStore.getRandomBg();
     getNewPhrase();
   } catch {
     hasError.value = true;
   } finally {
     isLoading.value = false;
+  }
+
+  try {
+    await bgsStore.getBgList();
+    bgsStore.getRandomBg();
+  } catch {
+    console.error("Не удалось загрузить фон");
   }
 
 });
@@ -155,8 +160,8 @@ const audio = new Audio(buttonPressSound);
 
 watch(errors, (newVal, oldVal) => {
   if (!volume.value || !audio.paused) return;
-  if (newVal.length > oldVal.length) { 
-    audio.play();             
+  if (newVal.length > oldVal.length) {
+    audio.play();
   }
 });
 
