@@ -134,8 +134,6 @@ const speak = () => {
   utterance.voice = enVoices[Math.floor(Math.random() * enVoices.length)];
   synth.cancel();
   synth.speak(utterance);
-  console.log(utterance.voice.name);
-
 };
 
 // speech
