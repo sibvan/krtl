@@ -128,6 +128,7 @@ watch(isReady, async (newVal) => {
 const speak = () => {
   const speech = props.currentLang === "en" ? props.phrase : props.translate;
   const utterance = new SpeechSynthesisUtterance(speech);
+  utterance.lang = "en-US";
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
   const enVoices = voices.filter(v => v.lang.startsWith("en"));
