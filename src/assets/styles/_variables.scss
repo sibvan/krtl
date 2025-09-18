@@ -1,0 +1,14 @@
+$keyboard-sizes: 96, 168, 192, 180, 240, 144, 504;
+
+$color-black: #0C0E0B;
+$color-white: #fff;
+$color-red: #D7303B;
+$color-blue: #D6E8F4;
+
+
+:root {
+  --color-black: #{$color-black};
+  --color-white: #{$color-white};
+  --color-red: #{$color-red};
+  --color-blue: #{$color-blue};
+}

@@ -1,0 +1,19 @@
+.footer {
+  display: flex;
+
+  &__text {
+    color: var(--color-black);
+    font-size: 16px;
+  }
+
+  &__link {
+    color: var(--color-black);
+    font-size: 16px;
+    text-decoration-color: color-mix(in srgb, currentColor 10%, transparent);
+    transition: text-decoration-color 0.2s ease-in-out;
+
+    &:hover {
+      text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+    }
+  }
+}

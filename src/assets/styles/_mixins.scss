@@ -1,0 +1,10 @@
+@mixin keyboard-size($size) {
+  width: calc($size * 100% / 1572);
+}
+
+@mixin keyboard-min-size($prop, $size) {
+  #{$prop}: min(
+    calc(100dvw * (#{$size} / 2430)),
+    calc(1710px * (#{$size} / 2430))
+  );
+}

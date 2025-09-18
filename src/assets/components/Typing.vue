@@ -23,10 +23,10 @@
       <div class="typing__translate">
 
         <p class="typing__button" v-if="isLoading">Данные загружаются</p>
-        <p class="typing__tranlation" v-if="hasError">Произошла ошибка</p>
+        <p class="typing__translation" v-if="hasError">Произошла ошибка</p>
         <p @click="getNewPhrase" class="typing__button" v-if="isFinished">Следующая фраза</p>
 
-        <p class="typing__tranlation" v-if="!isFinished && !isLoading && !hasError">{{ translate }}</p>
+        <p class="typing__translation" v-if="!isFinished && !isLoading && !hasError">{{ translate }}</p>
 
       </div>
     </div>
