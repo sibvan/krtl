@@ -131,7 +131,10 @@ const speak = () => {
   utterance.lang = "en-US";
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
-  const enVoices = voices.filter(v => v.lang.startsWith("en"));
+  const badVoices = ["Шутник", "Орган", "Виолончель", "Зарвокс", "Колокольчик", "Триноид", "Прыг-скок", "Шепот", "Хорошие новости", "Воббл", "Плохие новости", "Пузырьки"];
+  const enVoices = voices.filter(
+    v => v.lang.startsWith("en") && !badVoices.includes(v.name)
+  );
   utterance.voice = enVoices[Math.floor(Math.random() * enVoices.length)];
   synth.cancel();
   synth.speak(utterance);
